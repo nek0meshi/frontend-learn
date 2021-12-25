@@ -1,6 +1,7 @@
 const gulp = require('gulp')
 const autoprefixer = require('gulp-autoprefixer')
 const babel = require('gulp-babel')
+const cleanCss = require('gulp-clean-css')
 const sass = require('gulp-sass')(require('sass'))
 const uglify = require('gulp-uglify')
 
@@ -17,6 +18,7 @@ const styles = () => {
   return gulp.src('src/**/*.sass')
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
+    .pipe(cleanCss())
     .pipe(gulp.dest('dist'))
 }
 
