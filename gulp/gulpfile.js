@@ -3,6 +3,7 @@ const autoprefixer = require('gulp-autoprefixer')
 const babel = require('gulp-babel')
 const cleanCss = require('gulp-clean-css')
 const sass = require('gulp-sass')(require('sass'))
+const sourcemaps = require('gulp-sourcemaps')
 const uglify = require('gulp-uglify')
 
 const SCRIPTS_TARGET_FILES = [
@@ -14,18 +15,22 @@ const STYLES_TARGET_FILES = [
 
 const scripts = () => {
   return gulp.src(SCRIPTS_TARGET_FILES)
+    .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
     .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist'))
 }
 
 const styles = () => {
   return gulp.src(STYLES_TARGET_FILES)
+    .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(cleanCss())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist'))
 }
 
